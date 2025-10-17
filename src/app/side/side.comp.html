@@ -1,0 +1,15 @@
+<div class="side-area">
+
+  <div class="side" #sidePanel>
+  
+    @for(panel of folderPanels; track panel.id) {
+      <app-folder-panel
+        [folderData]="panel">
+      </app-folder-panel>
+    }
+  
+  </div>
+  <div class="drag-divider" (mousedown)="startResize($event)">
+
+  </div>
+</div>

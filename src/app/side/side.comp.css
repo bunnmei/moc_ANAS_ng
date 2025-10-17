@@ -1,0 +1,25 @@
+.side-area{
+  width: auto;
+  display: flex;
+  /* overflow: scroll; */
+}
+
+.side {
+  overflow: hidden;
+  width: 300px;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: black;
+}
+
+.drag-divider {
+  width: 4px;
+  height: 100vh;
+  background-color: pink;
+}
+
+.drag-divider:hover {
+  cursor: col-resize;
+  width: 10px;
+  transform: translateX(-3px);
+}

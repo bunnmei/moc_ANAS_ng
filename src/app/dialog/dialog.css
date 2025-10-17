@@ -1,0 +1,32 @@
+.dialog-area {
+  position: relative;
+}
+
+.mask {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f8ff33;
+}
+
+.mask-on-dialog {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.dialog-panel {
+  pointer-events: auto;
+  position: absolute;
+  top: calc((100% - 350px) / 2);
+  left: calc((100% - 450px) / 2);
+  height: 300px;
+  width: 450px;
+  border-radius: 25px;
+  background-color: gray;
+}

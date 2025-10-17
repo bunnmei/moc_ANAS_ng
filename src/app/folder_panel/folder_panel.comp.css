@@ -1,0 +1,103 @@
+.panel-top {
+  max-width: 300px;
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 32px;
+  background-color: rgb(70, 39, 0);
+  border-radius: 4px; 
+}
+
+.folder-name {
+  width: calc(300px - 32px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel:hover {
+  background-color: rgb(90, 49, 0);
+  cursor: pointer;
+}
+.open-folder-icon {
+  /* margin-right: 10px; */
+  background-color: #787878;
+  width: 16px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.open-folder-icon:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.open-folder-icon > svg {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}
+
+.type-icon {
+  width: 32px;
+  height: 32px;
+  /* background-color: rgb(125, 104, 107); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.folder-name {
+  margin: 0;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.child-box {
+  margin-left: 8px;
+}
+
+.temp-panel {
+  width: 300px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.loading-icon {
+  width: 32px;
+  height: 32px;
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-text {
+  display: flex;
+  align-items: center;  
+}
+
+.loading-icon > svg {
+  animation: rotateAnimation 2s linear infinite;
+}
+
+@keyframes rotateAnimation {
+/* 0%の状態（アニメーション開始時）: 回転なし（0度） */
+  from {
+    transform: rotate(0deg);
+  }
+  /* 100%の状態（アニメーション終了時）: 360度回転 */
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
