@@ -2,7 +2,23 @@
   <div class="mask" (click)="closeDialog()"></div>
   <div class="mask-on-dialog">
     <div class="dialog-panel" (click)="none()">
-  
+      @if(dataShare.dialogType() === "folder"){
+
+        <div class="current-path">
+          作成パス: {{ dataShare.currentPath() }} / {{newFolderName}}
+        </div>
+        <label for="folder-name-input" class="folder-name-input">
+          新しいフォルダー名:
+          <input type="text" id="folder-name-input" [(ngModel)]="newFolderName">
+        </label>
+
+        <div class="btn-panel-line">
+          <div class="spacer"></div>
+          <div class="submit-btn" (click)="createFolder()">
+            作成
+          </div>
+        </div>
+      }
     </div>
   </div>
 </div>
