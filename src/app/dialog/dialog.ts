@@ -36,6 +36,7 @@ export class Dialog {
         // 成功時の処理（例: サーバーが新しく作成されたフォルダを返した場合）
         next: (response) => {
           console.log('フォルダ作成成功:', response);
+          this.dataShare.reloadCurrentFolder();
         },
         // 失敗時の処理
         error: (err) => {

@@ -18,6 +18,21 @@
             作成
           </div>
         </div>
+      } @else if(dataShare.dialogType() === "upload") {
+        <div class="current-path">
+          アップロードパス: {{ dataShare.currentPath() }} / {{newFolderName}}
+        </div>
+        <label for="folder-name-input" class="folder-name-input">
+          新しいフォルダー名:
+          <input type="file" id="file-input">
+        </label>
+
+        <div class="btn-panel-line">
+          <div class="spacer"></div>
+          <div class="submit-btn" (click)="createFolder()">
+            作成
+          </div>
+        </div>
       }
     </div>
   </div>

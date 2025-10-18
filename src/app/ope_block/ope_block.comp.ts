@@ -17,7 +17,6 @@ export class OpeBlock {
     })
   }
 
-
   openFolderOrFile() {
     window.open(`http://192.168.1.112:8080/public${this.dataShare.currentPath()}`)
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild,  ElementRef, signal} from '@angular/core';
+import { Component, Input, OnInit, OnChanges, ViewChild,SimpleChanges, ElementRef, signal, effect} from '@angular/core';
 
 import { FolderResponse } from '../side/side.comp';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +12,7 @@ import { DataShare } from '../data-share';
   styleUrls: ['./folder_panel.comp.css'],
   imports: [FilePanelComp]
 })
-export class FolderPanelComp implements OnInit {
+export class FolderPanelComp implements OnInit, OnChanges {
 
   childStatus = signal<'no_fetch' | 'fetching' | 'fetched'>('no_fetch')
 
@@ -22,13 +22,35 @@ export class FolderPanelComp implements OnInit {
   constructor(
     private http: HttpClient,
     public dataShare: DataShare
-  ) { }
+  ) {
+
+    effect(() => {
+      const info = this.dataShare.currentFolder();
+      if (!info) return;
+
+      const { folder, reason } = info;
+
+      if (reason === 'reload') {
+        console.log('再読み込み:', folder.name);
+        this.reloadFolder();
+      } else {
+        console.log('選択変更:', folder.name);
+      }
+    });
+  }
 
   ngOnInit(): void {
     // コンポーネントが初期化されたとき、この folderData に親から渡されたデータが入っています
     console.log('受け取ったデータ:', this.folderData.name);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("folder_panel.comp.ts - ")
+    if (changes['folderData']) {
+      console.log('folderDataが更新されました:', this.folderData.name);
+      this.reloadFolder();
+    }
+  }
 
 
   @ViewChild('icon', { static: true }) 
@@ -52,6 +74,7 @@ export class FolderPanelComp implements OnInit {
   setPath() {
     console.log(`${this.folderData.absolutePath}`)
     this.dataShare.setNewPath(`${this.folderData.absolutePath}`)
+    this.dataShare.setCurrentFolder(this.folderData); 
     // this.dataShare.currentPath.set(`${this.folderData.absolutePath}`)
   }
 
@@ -59,7 +82,7 @@ export class FolderPanelComp implements OnInit {
     // 実際にデータを返すAPIのエンドポイントURLに置き換えてください
     const apiUrl = 'http://192.168.1.112:8080/sd';
     
-    if(this.childStatus() !== 'no_fetch') return
+    // if(this.childStatus() !== 'no_fetch') return
     this.childStatus.set('fetching')
     this.http.post<FolderResponse[]>(apiUrl, { query: this.folderData.absolutePath })
       .subscribe({
@@ -86,5 +109,14 @@ export class FolderPanelComp implements OnInit {
           console.error('フォルダ作成エラー:', err);
         }
       });
+  }
+
+
+  reloadFolder() {
+    if (this.folderData.open) {
+      console.log('フォルダ再読み込み:', this.folderData.absolutePath);
+      this.childStatus.set('no_fetch');
+      this.fetchFolderData();
+    }
   }
 }
