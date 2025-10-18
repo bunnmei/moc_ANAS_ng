@@ -1,7 +1,7 @@
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { DataShare } from '../data-share';
 
-export type opeBtnType = 'folder' | 'upload' | 'none';
+export type opeBtnType = 'folder' | 'upload' | 'download' | 'none';
 
 @Component({
   selector: 'app-ope-block',

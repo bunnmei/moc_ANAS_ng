@@ -22,15 +22,42 @@
         <div class="current-path">
           アップロードパス: {{ dataShare.currentPath() }} / {{newFolderName}}
         </div>
-        <label for="folder-name-input" class="folder-name-input">
-          新しいフォルダー名:
-          <input type="file" id="file-input">
+       
+        <label class="upload-btn">
+          📁 ファイルを選択
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            multiple
+            hidden
+          />
+        </label>
+
+        <label class="upload-btn">
+          🗂 フォルダを選択
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            webkitdirectory
+            hidden
+          />
         </label>
 
         <div class="btn-panel-line">
           <div class="spacer"></div>
-          <div class="submit-btn" (click)="createFolder()">
-            作成
+          <div class="submit-btn" (click)="uploadFolderOrFile()">
+            アップロード
+          </div>
+        </div>
+      } @else if (dataShare.dialogType() === "download") {
+        <div class="current-path">
+          ダウンロード: {{ dataShare.currentPath() }}
+        </div>
+
+        <div class="btn-panel-line">
+          <div class="spacer"></div>
+          <div class="submit-btn" (click)="downloadFolderOrFile()">
+            ダウンロード
           </div>
         </div>
       }
