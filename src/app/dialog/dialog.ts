@@ -95,20 +95,36 @@ export class Dialog {
 
     // const formData = new FormData();
     // formData.append("uri", this.dataShare.currentPath())
-    const jbody = { uri: this.dataShare.currentPath() };
+    const jbody = {
+      uri: this.dataShare.currentPath(),
+      type: this.dataShare.currentFolder()?.folder.type
+    };
     this.http.post('http://192.168.1.112:8080/download',
       jbody, { 
       responseType: 'blob' // バイナリで受け取る
     }).subscribe((blob) => {
       
-      const parts = jbody.uri.split('/');
-      const a = document.createElement('a');
-      const url = window.URL.createObjectURL(blob);
-      console.log(url)
-      a.href = url;
-      a.download = `${parts[parts.length-1]}.zip`;
-      a.click();
-      window.URL.revokeObjectURL(url);
+      if (jbody.type === "folder") { 
+        const parts = jbody.uri.split('/');
+        const a = document.createElement('a');
+        const url = window.URL.createObjectURL(blob);
+        console.log(url)
+        a.href = url;
+        a.download = `${parts[parts.length-1]}.zip`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } else {
+        const contentDisposition = (blob as any).headers?.get?.('Content-Disposition');
+        const a = document.createElement('a');
+        const url = window.URL.createObjectURL(blob);
+        const parts = jbody.uri.split('/');
+        const fileName = `${parts[parts.length-1]}`;
+
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
     });
   }
 }

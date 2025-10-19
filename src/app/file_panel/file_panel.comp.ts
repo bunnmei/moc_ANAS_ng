@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FolderResponse } from '../side/side.comp';
-
+import { DataShare } from '../data-share';
 
 @Component({
   selector: 'app-file-panel',
@@ -9,7 +9,17 @@ import { FolderResponse } from '../side/side.comp';
 })
 export class FilePanelComp {
 
+  constructor(
+    public dataShare: DataShare
+  ) { 
+
+  }
+
   @Input()
   public folderData!: FolderResponse;
   
+  setPath() {
+    this.dataShare.setNewPath(`${this.folderData.absolutePath}`)
+    this.dataShare.setCurrentFolder(this.folderData);
+  }
 }
